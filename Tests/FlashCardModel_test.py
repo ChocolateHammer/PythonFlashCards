@@ -1,15 +1,16 @@
 import pytest
 
-from Tests.Moq_LangLoader import Moq_LangLoader
+from Tests.MoqLangLoader import MoqLangLoader
 from src.models.FlashCardModel import FlashCardModel
 from src.models.WordGetter import WordGetter
 
 
 def setup(count):
     """Going to do the same setup a bunch of times so this will return a setup word getter"""
-    word_getter = WordGetter(Moq_LangLoader(), count, 'German')
+    word_getter = WordGetter(MoqLangLoader(), count, 'German')
     words = word_getter.get_lesson_words()
     return FlashCardModel( 'German', words )
+
 
 def setup_with_given_words( words):
     return FlashCardModel('German', words)
@@ -22,6 +23,7 @@ def test_model_init():
     assert model.cards_processed == 0
     assert model.score == 0
     assert len(model.card_words) == count
+
 
 def test_model_done():
     model = setup( 2 )
@@ -54,6 +56,7 @@ def test_model_check_answer(words, test_word, expected_result):
     model = setup_with_given_words( words )
     assert model.check_answer(test_word) == expected_result
 
+
 def test_model_score():
     """This one is kind of an integration test"""
     model = setup_with_given_words([('Hier', 'Here'), ('es', 'it'), ('ist', 'is'), ('mein', 'my'), ('freude', 'friend')])
@@ -71,4 +74,3 @@ def test_model_score():
     assert model.score == 3
 
     assert model.calc_percent() == 3.0/5.0
-

@@ -7,7 +7,5 @@ loader = LangLoader(lang_path='../../LangFlashCards/data/')
 csm = CourseSelectorModel(loader)
 csv = CourseSelectorView( csm )
 csv.launch_form()
-#print(csm.chosen_language + str(csm.chosen_card_count))
-words = WordGetter( loader, csm.chosen_card_count, csm.chosen_language ).get_lesson_words()
-print( words )
+
 

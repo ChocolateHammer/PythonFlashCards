@@ -8,10 +8,12 @@ class LangLoader(ILangLoader):
     STANDARD_CVS_NAME_ENDING = "_words.csv"
     DEFAULT_LANG_PATH = '../../../LangFlashCards/data/'
 
+
     def __init__(self, lang_path : str = DEFAULT_LANG_PATH):
         super().__init__(lang_path)
 
-    def get_language_list(self) -> any([str]):
+
+    def get_language_list(self) :
         """Gets a list of languages by looking for comma-delimited files
          at the landDir location.  Note: It's lazy but this is just a practice
          implementation so the files need to take a naming convention of *_words.csv"""
@@ -23,17 +25,14 @@ class LangLoader(ILangLoader):
         results = [l[:-len(self.STANDARD_CVS_NAME_ENDING)] for l in results]
         return results
 
-    def get_known_words(self, language: str) -> any(tuple[str]):
+
+    def get_known_words(self, language: str) :
         """Gets the string tuples for all known words in the selected library """
         with open(self.generata_file_name(language)) as f:
             reader = csv.reader(f)
             lst = list(tuple(line) for line in reader)
         return lst
 
+
     def generata_file_name(self, language: str):
         return self.lang_path+language+self.STANDARD_CVS_NAME_ENDING
-
-# temp = LanguageLoader()
-# langs = temp.get_language_list()
-# print(langs)
-# print(temp.get_know_words(langs[1]))

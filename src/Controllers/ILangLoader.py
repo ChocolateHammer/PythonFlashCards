@@ -14,11 +14,13 @@ class ILangLoader:
             lang_path = lang_path + '/'
         self.lang_path = lang_path
 
-    def get_language_list( self) -> any([str]) :
+
+    def get_language_list( self)  :
         """Gets a list of languages by looking for comma-delimited files at the landDir location"""
         pass
 
+
     def get_known_words(self,
-                        language : str) -> any(tuple[str]):
+                        language : str) :
         """Gets the string tuples for all known words in the selected library """
         pass

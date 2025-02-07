@@ -1,12 +1,11 @@
 import pytest
-
-from Tests.Moq_LangLoader import Moq_LangLoader
+from Tests.MoqLangLoader import MoqLangLoader
 from src.models.WordGetter import WordGetter
 
 
 def setup( number_cards ):
     """Going to do the same setup a bunch of times so this will return a setup word getter"""
-    moq_load = Moq_LangLoader()
+    moq_load = MoqLangLoader()
     return WordGetter(moq_load, number_cards, 'German')
 
 
@@ -15,7 +14,7 @@ def test_word_first_line_skipped():
     number_cards = 10
     word_getter = setup(number_cards)
     words = word_getter.get_domain_words()
-    assert Moq_LangLoader.FIRST_LINE not in words
+    assert MoqLangLoader.FIRST_LINE not in words
 
 
 card_count_test_data = [
@@ -38,6 +37,7 @@ def test_correct_card_count(card_count, expected_domain_count, expected_count):
     word_getter = setup(card_count)
     words = word_getter.get_lesson_words()
     assert len(words) == expected_count
+
 
 @pytest.mark.parametrize("card_count, included_word, excluded_word",
     [(1, ('die', 'the'), ('Es', 'It')),

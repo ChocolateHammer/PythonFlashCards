@@ -12,14 +12,17 @@ def test_loader_generata_file_name():
 
     assert filename == lang_path+language+lloader.STANDARD_CVS_NAME_ENDING
 
+
 def test_loader_gets_correct_default_path():
     """make sure that the loader generates a valid default lang  path if none is passed in"""
     lloader = LangLoader()
     assert lloader.lang_path == lloader.DEFAULT_LANG_PATH
 
+
 def test_path_gets_terminator_if_missing():
     loader = LangLoader('../test')
     assert loader.lang_path == '../test/'
+
 
 def test_assert_thrown_on_null_or_empty_path():
     with pytest.raises(Exception) as exc_info:

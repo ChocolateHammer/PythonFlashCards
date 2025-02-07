@@ -26,6 +26,7 @@ class WordGetter:
         end_index = min( len(all_words), (self.card_count*2)+1 )
         return all_words[1:end_index]
 
+
     def get_lesson_words(self) -> any(tuple[str]):
         """uses the loader to get all the words in the dictionary then gets a subset of them for the test"""
         sub_list =  self.get_domain_words()

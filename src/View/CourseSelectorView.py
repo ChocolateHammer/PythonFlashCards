@@ -1,5 +1,4 @@
 from tkinter.ttk import Combobox
-
 from src.models.CourseSelectorModel import CourseSelectorModel
 from tkinter import *
 
@@ -42,6 +41,7 @@ class CourseSelectorView:
         okay_btn = Button(text="Start Lesson", command=self.start_button_pressed)
         okay_btn.grid( row = 4, column = 0, padx=8, pady=8)
 
+
     def start_button_pressed(self):
         """applies choices to the model and closes the window"""
         self.model.set_langauge( self.select_lang.get() )
@@ -49,7 +49,6 @@ class CourseSelectorView:
         self.window.quit()
         self.window.destroy()
 
+
     def launch_form(self):
         self.window.mainloop()
-
-
