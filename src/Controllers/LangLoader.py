@@ -4,7 +4,7 @@ import csv
 
 
 class LangLoader(ILangLoader):
-    """"A simple class to handle the file IO."""
+    """A simple class to handle the file IO."""
     STANDARD_CVS_NAME_ENDING = "_words.csv"
     DEFAULT_LANG_PATH = '../../../LangFlashCards/data/'
 

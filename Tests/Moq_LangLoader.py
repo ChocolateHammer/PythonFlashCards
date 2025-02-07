@@ -5,8 +5,8 @@ class Moq_LangLoader(ILangLoader):
 
     FIRST_LINE = ('German', 'English')
 
-    def __init__(self, langDir: str = '../data/'):
-        super().__init__(langDir)
+    def __init__(self, _lang_dir: str = '../data/'):
+        super().__init__(_lang_dir)
 
 
     def get_language_list(self) -> any([str]):

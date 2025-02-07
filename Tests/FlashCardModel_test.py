@@ -1,14 +1,12 @@
 import pytest
 
 from Tests.Moq_LangLoader import Moq_LangLoader
-from src.models.CourseSelectorModel import CourseSelectorModel
 from src.models.FlashCardModel import FlashCardModel
 from src.models.WordGetter import WordGetter
 
 
 def setup(count):
     """Going to do the same setup a bunch of times so this will return a setup word getter"""
-    moq_load = Moq_LangLoader()
     word_getter = WordGetter(Moq_LangLoader(), count, 'German')
     words = word_getter.get_lesson_words()
     return FlashCardModel( 'German', words )

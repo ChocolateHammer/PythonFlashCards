@@ -1,5 +1,3 @@
-from src.Controllers.ILangLoader import ILangLoader
-
 
 class FlashCardModel:
     """Super simple class that presents the cards to the student"""
