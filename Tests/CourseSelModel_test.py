@@ -11,21 +11,16 @@ def test_course_sel_model_defaults_set_correctly():
     assert model.chosen_language == moq_load.get_language_list()[0]
 
 
-@pytest.mark.parametrize("invalid_langs", [
-    "",
-    "Canadian"
-])
+@pytest.mark.parametrize("invalid_langs", ["","Canadian"])
 def test_model_throws_with_invalid_langauge(invalid_langs):
     """should raise and exception if the language is unknown"""
     moq_load = MoqLangLoader()
     model = CourseSelectorModel(moq_load)
-    with pytest.raises( Exception ) as exc_info:
+    with pytest.raises(Exception) as exc_info:
         model.set_langauge(invalid_langs)
     assert str(exc_info.value) == "unexpected langauge encountered"
 
-@pytest.mark.parametrize("invalid_card", [
-    -1, 0, 500
-])
+@pytest.mark.parametrize("invalid_card", [-1, 0, 500])
 def test_model_throws_with_invalid_card(invalid_card):
     """Should raise an exception if the card value isn't valid."""
     moq_load = MoqLangLoader()

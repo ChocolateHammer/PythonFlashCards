@@ -1,6 +1,7 @@
 from tkinter.ttk import Combobox
+
 from src.models.CourseSelectorModel import CourseSelectorModel
-from tkinter import *
+from tkinter import Button, Tk, Label, StringVar, IntVar
 
 
 class CourseSelectorView:
@@ -14,7 +15,6 @@ class CourseSelectorView:
         self.window = Tk()
         self.window.title("Course Selector")
         self.window.config(pady=25, padx=25)
-
 
         #language selector setup
         lang_l = Label(self.window, text="What Language would you like to study today:")
@@ -39,16 +39,14 @@ class CourseSelectorView:
         self.sel_card_count.set(self.model.chosen_card_count)
 
         okay_btn = Button(text="Start Lesson", command=self.start_button_pressed)
-        okay_btn.grid( row = 4, column = 0, padx=8, pady=8)
-
+        okay_btn.grid(row=4, column=0, padx=8, pady=8)
 
     def start_button_pressed(self):
         """applies choices to the model and closes the window"""
-        self.model.set_langauge( self.select_lang.get() )
-        self.model.set_card_count( self.sel_card_count.get())
+        self.model.set_langauge(self.select_lang.get())
+        self.model.set_card_count(self.sel_card_count.get())
         self.window.quit()
         self.window.destroy()
-
 
     def launch_form(self):
         self.window.mainloop()

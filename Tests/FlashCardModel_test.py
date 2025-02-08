@@ -26,12 +26,13 @@ def test_model_init():
 
 
 def test_model_done():
-    model = setup( 2 )
+    model = setup(2)
     assert model.done() == False
     model.next()
     assert model.done() == False
     model.next()
     assert model.done() == True
+
 
 def test_next_stops_at_done():
     """checks to make sure you can't next beyond the end of the cards array"""
