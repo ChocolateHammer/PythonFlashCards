@@ -22,8 +22,7 @@ card_count_test_data = [
     (5, 10, 5),
     (15, 30, 15),
     (16, 30, 16),  #there are only 31[included the dropped (german,english) row] so 16 is an edge case
-    (40, 30, 30)  #if there are more cards than words in the dictionary should take the whole dictionary
-]
+    (40, 30, 30) ] #if there are more cards than words in the dictionary should take the whole dictionary
 @pytest.mark.parametrize("card_count, expected_domain_count, expected_count",
     card_count_test_data)
 def test_domain_count(card_count, expected_domain_count, expected_count):
@@ -41,8 +40,7 @@ def test_correct_card_count(card_count, expected_domain_count, expected_count):
 
 @pytest.mark.parametrize("card_count, included_word, excluded_word",
     [(1, ('die', 'the'), ('Es', 'It')),
-     (5, ('Du', 'You'),  ('mich', 'me'))
-    ])
+     (5, ('Du', 'You'),  ('mich', 'me'))])
 def test_correct_words_in_domain(card_count, included_word, excluded_word):
     word_getter=setup(card_count)
     domain = word_getter.get_domain_words()

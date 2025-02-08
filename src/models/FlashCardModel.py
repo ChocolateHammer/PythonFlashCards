@@ -1,7 +1,7 @@
 
 class FlashCardModel:
     """Super simple class that presents the cards to the student"""
-    def __init__(self, language: str, card_words ) :
+    def __init__(self, language: str, card_words):
         """Just sets the learning session view model up"""
         self.language = language
         self.card_words = card_words
@@ -15,10 +15,10 @@ class FlashCardModel:
     def next(self):
         """moves the pointer to the next word in the list"""
         if not self.done():
-            self.cards_processed +=1
+            self.cards_processed += 1
 
     def front(self):
-        """returns the currently active forgien language word for the front of the card"""
+        """returns the currently active foreign language word for the front of the card"""
         return self.card_words[self.cards_processed][0].strip()
 
     def back(self):

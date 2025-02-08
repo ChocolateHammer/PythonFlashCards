@@ -9,9 +9,8 @@ class LangLoader(ILangLoader):
     DEFAULT_LANG_PATH = '../../../LangFlashCards/data/'
 
 
-    def __init__(self, lang_path : str = DEFAULT_LANG_PATH):
+    def __init__(self, lang_path: str = DEFAULT_LANG_PATH):
         super().__init__(lang_path)
-
 
     def get_language_list(self):
         """Gets a list of languages by looking for comma-delimited files

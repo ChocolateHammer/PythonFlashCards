@@ -8,7 +8,7 @@ class CourseSelectorView:
     """This is the view to allow selection of language and course complexity"""
     FONT_NAME = "Courier"
 
-    def __init__(self, model : CourseSelectorModel):
+    def __init__(self, model: CourseSelectorModel):
         self.model = model
 
         #define window
