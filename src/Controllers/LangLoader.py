@@ -26,7 +26,7 @@ class LangLoader(ILangLoader):
 
     def get_known_words(self, language: str):
         """Gets the string tuples for all known words in the selected library """
-        with open(self.generata_file_name(language)) as f:
+        with open(self.generata_file_name(language), encoding='Latin1') as f:
             reader = csv.reader(f)
             lst = list(tuple(line) for line in reader)
         return lst

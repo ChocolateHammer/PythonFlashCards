@@ -57,6 +57,13 @@ def test_model_check_answer(words, test_word, expected_result):
     model = setup_with_given_words( words )
     assert model.check_answer(test_word) == expected_result
 
+def test_model_goes_to_front_after_next():
+    model = setup(3)
+    model.flip_card()
+    assert not model.showing_front
+    model.next()
+    assert model.showing_front
+
 
 def test_model_score():
     """This one is kind of an integration test"""
@@ -75,3 +82,12 @@ def test_model_score():
     assert model.score == 3
 
     assert model.calc_percent() == 3.0/5.0
+
+
+def test_model_flip():
+    model = setup(3)
+    assert model.showing_front
+    model.flip_card()
+    assert not model.showing_front
+    model.flip_card()
+    assert model.showing_front

@@ -7,6 +7,7 @@ class FlashCardModel:
         self.card_words = card_words
         self.cards_processed = 0
         self.score = 0
+        self.showing_front = True
 
     def done(self):
         """checks to see if the position is at the end of the list"""
@@ -16,6 +17,7 @@ class FlashCardModel:
         """moves the pointer to the next word in the list"""
         if not self.done():
             self.cards_processed += 1
+        self.showing_front = True
 
     def front(self):
         """returns the currently active foreign language word for the front of the card"""
@@ -25,6 +27,8 @@ class FlashCardModel:
         """returns the english word on the back of the card"""
         return self.card_words[self.cards_processed][1].strip()
 
+    #I was going to derive a second model off this one to handle the other test. But I found that
+    #it's actually pretty useful to just use in the simple model and the code is cleaner this woy!
     def check_answer(self, test_word : str):
         """checks to see if the entered word matches the english side of the card"""
         return_value = self.back().casefold() == test_word.strip().casefold()
@@ -35,3 +39,7 @@ class FlashCardModel:
 
     def calc_percent(self):
         return float(self.score)/len(self.card_words)
+
+
+    def flip_card(self):
+        self.showing_front = not self.showing_front
