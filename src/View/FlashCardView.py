@@ -1,5 +1,7 @@
-from tkinter import Tk, Label, messagebox, PhotoImage
+from tkinter import Tk, Label, messagebox, PhotoImage, Canvas
 from tkinter.ttk import Button
+
+
 from src.models.FlashCardModel import FlashCardModel
 
 class FlashCardView:
@@ -16,7 +18,7 @@ class FlashCardView:
         self.root = Tk()
         self.root.title(f"{model.language} lesson {len(model.card_words)} cards")
         self.root.resizable(False, False)
-        self.root.config(pady=25, padx=25, background=self.BACKGROUND_COLOR)
+        self.root.config(pady=50, padx=50, background=self.BACKGROUND_COLOR)
 
         # language selector setup
         lang_l = Label(self.root,  background=self.BACKGROUND_COLOR, font=("Arial", 18),
@@ -24,16 +26,18 @@ class FlashCardView:
                             "\nThen click the check if you got and the x if you missed it.")
         lang_l.pack(pady=0)
 
-# TODO: the render of the card is lacking will probably need to construct a canvas to make it work.
         # card button
         self.front_image = PhotoImage(file=image_path + "card_front.png")
         self.back_image = PhotoImage(file=image_path + "card_back.png")
-        self.card_button = Button(self.root, image=self.front_image,
-                                  compound="center",
-                                  command= self.card_button_pressed)
-        self.card_button.config()
-        self.card_button.pack()
+        self.canvas  = Canvas(width=800,height=526)
+        self.canvas.create_image(400, 263, image = self.front_image)
+        self.canvas.config(background=self.BACKGROUND_COLOR, highlightthickness=0)
+        self.card_title = self.canvas.create_text(400,150, text="Title", font=("Ariel", 40, "italic"))
+        self.card_word = self.canvas.create_text(400,263, text="Word", font=("Ariel", 60, "bold"))
+        self.canvas.bind('<Button-1>', self.card_button_pressed)
+        self.canvas.pack()
         self.update_card()
+
         # correct button
         self.correct_glyph = PhotoImage(file=image_path+"right.png")
         self.correct_button = Button(self.root, image=self.correct_glyph,
@@ -48,11 +52,13 @@ class FlashCardView:
     def update_card(self):
         """updates the card to show the front side or back side"""
         if self.model.showing_front:
-            self.card_button.config(image=self.front_image, text=f"{self.model.language} : {self.model.front()}")
+            self.canvas.itemconfig(self.card_title, text=self.model.language)
+            self.canvas.itemconfig(self.card_word, text=self.model.front())
         else:
-            self.card_button.config(image=self.back_image, text=f"English : {self.model.back()}")
+            self.canvas.itemconfig(self.card_title, text="English")
+            self.canvas.itemconfig(self.card_word, text=self.model.back())
 
-    def card_button_pressed(self):
+    def card_button_pressed(self, event):
         """handles the pressing of the flip button"""
         self.model.flip_card()
         self.update_card()

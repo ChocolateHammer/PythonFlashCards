@@ -6,7 +6,7 @@ to develop a Python app.
 
 
 ## Things left to do
-1. Clean up UI
+2. figure out an method so that well known words are skipped.
 4. disable the buttons[correct and incorrect] until the card is flipped
 
 ## Unimplemented logic
