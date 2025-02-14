@@ -9,10 +9,10 @@ def setup(count):
     """Going to do the same setup a bunch of times so this will return a setup word getter"""
     word_getter = WordGetter(MoqLangLoader(), count, 'German')
     words = word_getter.get_lesson_words()
-    return FlashCardModel( 'German', words )
+    return FlashCardModel('German', words )
 
 
-def setup_with_given_words( words):
+def setup_with_given_words(words):
     return FlashCardModel('German', words)
 
 
@@ -27,17 +27,17 @@ def test_model_init():
 
 def test_model_done():
     model = setup(2)
-    assert model.done() == False
+    assert not model.done()
     model.next()
-    assert model.done() == False
+    assert not model.done()
     model.next()
-    assert model.done() == True
+    assert model.done()
 
 
 def test_next_stops_at_done():
     """checks to make sure you can't next beyond the end of the cards array"""
     model = setup(3)
-    for i in range(0,4):
+    for i in range(0, 4):
         model.next()
     assert model.cards_processed == 3
 
@@ -47,14 +47,14 @@ def test_model_front_back():
     assert model.front() == 'dir'
     assert  model.back() == 'the'
 
+
 @pytest.mark.parametrize("words, test_word, expected_result",
     [ ([('die', 'the')], 'The', True),
       ([('die', 'the')], 'the', True),
       ([('die', 'the')], '', False),
-      ([('die', 'the')], 'money', False),
-    ])
+      ([('die', 'the')], 'money', False)])
 def test_model_check_answer(words, test_word, expected_result):
-    model = setup_with_given_words( words )
+    model = setup_with_given_words(words)
     assert model.check_answer(test_word) == expected_result
 
 def test_model_goes_to_front_after_next():
@@ -75,12 +75,11 @@ def test_model_score():
     assert model.score == 2
     model.check_answer("isn't")
     assert model.score == 2
-    #lets simulate a skip on "my
+    #lets simulate a skip
     model.next()
     assert model.score == 2
     model.check_answer('Friend')
     assert model.score == 3
-
     assert model.calc_percent() == 3.0/5.0
 
 

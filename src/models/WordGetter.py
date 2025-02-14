@@ -1,7 +1,6 @@
 from src.Controllers.ILangLoader import ILangLoader
 import random
 
-
 class WordGetter:
     """This class gathers the words to be used with this learning session
     Note: probably should just be a function rather than a class, but it's a
@@ -16,7 +15,6 @@ class WordGetter:
         self.language = lang
         self.loader = loader
 
-
     def get_domain_words(self):
         """uses the loader to get all the words in the dictionary
         then gets a 2x card count subset of them for the test
@@ -25,9 +23,8 @@ class WordGetter:
         end_index = min( len(all_words), (self.card_count*2)+1 )
         return all_words[1:end_index]
 
-
     def get_lesson_words(self):
         """uses the loader to get all the words in the dictionary then gets a subset of them for the test"""
-        sub_list =  self.get_domain_words()
+        sub_list = self.get_domain_words()
         random.shuffle(sub_list)
         return sub_list[:self.card_count]

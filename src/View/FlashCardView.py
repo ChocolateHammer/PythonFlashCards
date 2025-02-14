@@ -1,8 +1,6 @@
-from sys import modules
-from tkinter import Tk, Label, messagebox, Canvas, PhotoImage
+from tkinter import Tk, Label, messagebox, PhotoImage
 from tkinter.ttk import Button
 from src.models.FlashCardModel import FlashCardModel
-
 
 class FlashCardView:
     """The lesson view that displays flash cards and lets the user flip them
@@ -20,10 +18,10 @@ class FlashCardView:
         self.root.resizable(False, False)
         self.root.config(pady=25, padx=25, background=self.BACKGROUND_COLOR)
 
-
         # language selector setup
         lang_l = Label(self.root,  background=self.BACKGROUND_COLOR, font=("Arial", 18),
-                       text="Click the card when you think you know the answer.\nThen click the check if you got and the x if you missed it.")
+                       text="Click the card when you think you know the answer."+
+                            "\nThen click the check if you got and the x if you missed it.")
         lang_l.pack(pady=0)
 
 #todo the render of the card is lacking will probably need to construct a canvas to make it work.
@@ -36,13 +34,11 @@ class FlashCardView:
         self.card_button.config()
         self.card_button.pack()
         self.update_card()
-
-        #correct button
+        # correct button
         self.correct_glyph = PhotoImage(file=image_path+"right.png")
         self.correct_button = Button(self.root, image=self.correct_glyph,
                                      command=lambda :self.button_pressed(self.CORRECT_BUTTON))
         self.correct_button.pack(side='left')
-
         #incorrect button
         self.incorrect_glyph = PhotoImage(file=image_path+"wrong.png")
         self.incorrect_button = Button(self.root, image=self.incorrect_glyph,
@@ -52,7 +48,7 @@ class FlashCardView:
     def update_card(self):
         """updates the card to show the front side or back side"""
         if self.model.showing_front:
-            self.card_button.config( image=self.front_image, text=f"{self.model.language} : {self.model.front()}" )
+            self.card_button.config(image=self.front_image, text=f"{self.model.language} : {self.model.front()}" )
         else:
             self.card_button.config(image=self.back_image, text=f"English : {self.model.back()}")
         pass
@@ -65,7 +61,7 @@ class FlashCardView:
     def button_pressed(self, button_id):
         """"Handles the clicking of the correct button"""
         if button_id == self.CORRECT_BUTTON:
-            self.model.check_answer( self.model.back() )
+            self.model.check_answer(self.model.back())
         else:
             self.model.check_answer("incorrect answer")
         if self.model.done():
@@ -75,8 +71,9 @@ class FlashCardView:
 
     def handle_end_of_lesson(self):
         """handles the end of lesson stuff"""
-        self.root.withdraw() #hide the main window
-        messagebox.showinfo( title="Lesson Complete.", message=f"The lesson is concluded you got {self.model.calc_percent()*100}% correct!")
+        self.root.withdraw() # hide the main window
+        messagebox.showinfo(title="Lesson Complete.",
+                             message=f"The lesson is concluded you got {self.model.calc_percent()*100}% correct!")
         self.root.destroy()
 
     def launch_form(self):

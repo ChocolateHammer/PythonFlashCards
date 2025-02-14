@@ -27,8 +27,8 @@ class FlashCardModel:
         """returns the english word on the back of the card"""
         return self.card_words[self.cards_processed][1].strip()
 
-    #I was going to derive a second model off this one to handle the other test. But I found that
-    #it's actually pretty useful to just use in the simple model and the code is cleaner this woy!
+    # I was going to derive a second model off this one to handle the other test. But I found that
+    # it's actually pretty useful to just use in the simple model and the code is cleaner this woy!
     def check_answer(self, test_word : str):
         """checks to see if the entered word matches the english side of the card"""
         return_value = self.back().casefold() == test_word.strip().casefold()

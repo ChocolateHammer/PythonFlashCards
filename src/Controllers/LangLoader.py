@@ -19,8 +19,8 @@ class LangLoader(ILangLoader):
         results = [file.name for
                    file in dict_path.iterdir()
                    if file.name.endswith(self.STANDARD_CVS_NAME_ENDING)]
-        #truncate the standard cvs ending
-        results = [l[:-len(self.STANDARD_CVS_NAME_ENDING)] for l in results]
+        # truncate the standard cvs ending
+        results = [lang[:-len(self.STANDARD_CVS_NAME_ENDING)] for lang in results]
         return results
 
     def get_known_words(self, language: str):

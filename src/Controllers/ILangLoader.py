@@ -6,9 +6,9 @@ class ILangLoader:
     def __init__(self, lang_path: str):
         """Python doesn't really allow for interfaces but this kind of
         does the same thing.   Except for the init, which sets the lang path"""
-        if not lang_path or lang_path == '' :  #if not null or empty
+        if not lang_path or lang_path == '':  # if not null or empty
             raise Exception("Invalid path passed into ILangLoader")
-        #could do some regular expression checking here but this is just a play project so this is sufficient
+        # could do some regular expression checking here but this is just a play project so this is sufficient
         lang_path = lang_path.strip()
         if not lang_path.endswith('/'):
             lang_path = lang_path + '/'

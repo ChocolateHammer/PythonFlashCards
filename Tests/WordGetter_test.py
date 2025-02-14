@@ -3,7 +3,7 @@ from Tests.MoqLangLoader import MoqLangLoader
 from src.models.WordGetter import WordGetter
 
 
-def setup( number_cards ):
+def setup(number_cards):
     """Going to do the same setup a bunch of times so this will return a setup word getter"""
     moq_load = MoqLangLoader()
     return WordGetter(moq_load, number_cards, 'German')
@@ -42,7 +42,7 @@ def test_correct_card_count(card_count, expected_domain_count, expected_count):
     [(1, ('die', 'the'), ('Es', 'It')),
      (5, ('Du', 'You'),  ('mich', 'me'))])
 def test_correct_words_in_domain(card_count, included_word, excluded_word):
-    word_getter=setup(card_count)
+    word_getter = setup(card_count)
     domain = word_getter.get_domain_words()
     assert included_word in domain
     assert excluded_word not in domain

@@ -11,27 +11,27 @@ class CourseSelectorView:
     def __init__(self, model: CourseSelectorModel):
         self.model = model
 
-        #define window
+        # define window
         self.window = Tk()
         self.window.title("Course Selector")
         self.window.config(pady=25, padx=25)
 
-        #language selector setup
+        # language selector setup
         lang_l = Label(self.window, text="What Language would you like to study today:")
         lang_l.grid(row=0, column=0, padx=8, pady=8)
 
         self.select_lang = StringVar()
-        lang_cb = Combobox(self.window, textvariable= self.select_lang )
+        lang_cb = Combobox(self.window, textvariable=self.select_lang)
         lang_cb['values'] = model.languages
         lang_cb['state'] = 'readonly' #don't allow them to type unsupported or invalid options
         lang_cb.grid( row=0, column=1, padx=8, pady=8)
         self.select_lang.set( self.model.chosen_language)
 
-        #set up the card number
+        # set up the card number
         cards_l = Label(self.window, text="How many cards would you like to try:")
         cards_l.grid(row=2, column=0, padx=8, pady=8)
 
-        self.sel_card_count= IntVar()
+        self.sel_card_count = IntVar()
         count_cb = Combobox(self.window, textvariable=self.sel_card_count)
         count_cb['values'] = model.possible_card_counts()
         count_cb['state'] = 'readonly'  # don't allow them to type unsupported or invalid options
