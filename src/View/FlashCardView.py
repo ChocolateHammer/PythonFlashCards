@@ -1,5 +1,5 @@
 from sys import modules
-from tkinter import Tk, Label, messagebox
+from tkinter import Tk, Label, messagebox, Canvas, PhotoImage
 from tkinter.ttk import Button
 from src.models.FlashCardModel import FlashCardModel
 
@@ -7,66 +7,75 @@ from src.models.FlashCardModel import FlashCardModel
 class FlashCardView:
     """The lesson view that displays flash cards and lets the user flip them
     [doesn't check to see if they actually know the answer]  The simple case."""
+    CORRECT_BUTTON = 1
+    INCORRECT_BUTTON = 2
 
-    def __init__(self, model: FlashCardModel):
+    def __init__(self, model: FlashCardModel, image_path):
         self.model = model
 
         # define window
-        self.window = Tk()
-        self.window.title(f"{model.language} lesson {len(model.card_words)} cards")
-        self.window.config(pady=25, padx=25)
+        self.root = Tk()
+        self.root.title(f"{model.language} lesson {len(model.card_words)} cards")
+        self.root.resizable(False, False)
+        self.root.config(pady=25, padx=25, background="#B1DDC6")
+
 
         # language selector setup
-        lang_l = Label(self.window, text="Click the card when you think you know the answer then click the check if you got and the x if you missed it.:")
-        lang_l.grid(row=0, column=0, padx=8, pady=8)
+        lang_l = Label(self.root, text="Click the card when you think you know the answer.\nThen click the check if you got and the x if you missed it.")
+        lang_l.pack(pady=20)
 
         # card button
-        self.card_button = Button( self.window, command= self.card_button_pressed)
+        self.front_image = PhotoImage(file=image_path + "card_front.png")
+        self.back_image = PhotoImage(file=image_path + "card_back.png")
+        # self.card_button  = Canvas(width=800, height=500,  highlightthickness=0)
+        # self.card_button.create_image(800, 500, image=self.front_image)
+        # self.card_button.pack()
+        self.card_button = Button(self.root, image=self.front_image,
+                                  compound="center", command= self.card_button_pressed)
+        self.card_button.pack()
         self.update_card()
-        self.card_button.grid( row=1, column=0)
 
         #correct button
-        self.correct_button = Button(self.window, command= self.correct_button_pressed)
-        self.correct_button.grid(row=2, column=0)
+        self.correct_glyph = PhotoImage(file=image_path+"right.png")
+        self.correct_button = Button(self.root, image=self.correct_glyph,
+                                     command=lambda :self.button_pressed(self.CORRECT_BUTTON))
+        self.correct_button.pack(side='left')
 
         #incorrect button
-        self.incorrect_button = Button(self.window, command= self.incorrect_button_pressed)
-        self.incorrect_button.grid(row=2, column=1)
-
+        self.incorrect_glyph = PhotoImage(file=image_path+"wrong.png")
+        self.incorrect_button = Button(self.root, image=self.incorrect_glyph,
+                                       command=lambda :self.button_pressed(self.INCORRECT_BUTTON))
+        self.incorrect_button.pack(side='right')
 
     def update_card(self):
         """updates the card to show the front side or back side"""
         if self.model.showing_front:
-            self.card_button.config( text=f"{self.model.language} : {self.model.front()}" )
+            self.card_button.config( image=self.front_image, text=f"{self.model.language} : {self.model.front()}" )
         else:
-            self.card_button.config(text=f"English : {self.model.back()}")
+            self.card_button.config(image=self.back_image, text=f"English : {self.model.back()}")
+        pass
 
     def card_button_pressed(self):
         """handles the pressing of the flip button"""
         self.model.flip_card()
         self.update_card()
 
-#todo :  figure out how to hook both buttons up the the same command.
-    def correct_button_pressed(self):
+    def button_pressed(self, button_id):
         """"Handles the clicking of the correct button"""
-        self.model.check_answer( self.model.back() )
-        self.check_for_end_of_lesson()
-        self.update_card()
-
-    def incorrect_button_pressed(self):
-        """"Handles the clicking of the correct button"""
-        self.model.check_answer("incorrect answer")
-        self.check_for_end_of_lesson()
-        self.update_card()
-
-
-    def check_for_end_of_lesson(self):
-        """commonized logic to deal with the last button press."""
+        if button_id == self.CORRECT_BUTTON:
+            self.model.check_answer( self.model.back() )
+        else:
+            self.model.check_answer("incorrect answer")
         if self.model.done():
-            self.window.withdraw() #hide the main window
-            messagebox.showinfo( f"The lesson is concluded you got {self.model.calc_percent()}% correct!")
-            self.window.destroy()
+            self.handle_end_of_lesson()
+        else:
+            self.update_card()
+
+    def handle_end_of_lesson(self):
+        """handles the end of lesson stuff"""
+        self.root.withdraw() #hide the main window
+        messagebox.showinfo( title="Lesson Complete.", message=f"The lesson is concluded you got {self.model.calc_percent()*100}% correct!")
+        self.root.destroy()
 
     def launch_form(self):
-        self.window.mainloop()
-
+        self.root.mainloop()
