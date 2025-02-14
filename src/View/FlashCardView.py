@@ -9,6 +9,7 @@ class FlashCardView:
     [doesn't check to see if they actually know the answer]  The simple case."""
     CORRECT_BUTTON = 1
     INCORRECT_BUTTON = 2
+    BACKGROUND_COLOR = "#B1DDC6"
 
     def __init__(self, model: FlashCardModel, image_path):
         self.model = model
@@ -17,21 +18,22 @@ class FlashCardView:
         self.root = Tk()
         self.root.title(f"{model.language} lesson {len(model.card_words)} cards")
         self.root.resizable(False, False)
-        self.root.config(pady=25, padx=25, background="#B1DDC6")
+        self.root.config(pady=25, padx=25, background=self.BACKGROUND_COLOR)
 
 
         # language selector setup
-        lang_l = Label(self.root, text="Click the card when you think you know the answer.\nThen click the check if you got and the x if you missed it.")
-        lang_l.pack(pady=20)
+        lang_l = Label(self.root,  background=self.BACKGROUND_COLOR, font=("Arial", 18),
+                       text="Click the card when you think you know the answer.\nThen click the check if you got and the x if you missed it.")
+        lang_l.pack(pady=0)
 
+#todo the render of the card is lacking will probably need to construct a canvas to make it work.
         # card button
         self.front_image = PhotoImage(file=image_path + "card_front.png")
         self.back_image = PhotoImage(file=image_path + "card_back.png")
-        # self.card_button  = Canvas(width=800, height=500,  highlightthickness=0)
-        # self.card_button.create_image(800, 500, image=self.front_image)
-        # self.card_button.pack()
         self.card_button = Button(self.root, image=self.front_image,
-                                  compound="center", command= self.card_button_pressed)
+                                  compound="center",
+                                  command= self.card_button_pressed)
+        self.card_button.config()
         self.card_button.pack()
         self.update_card()
 
