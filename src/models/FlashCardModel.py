@@ -29,7 +29,7 @@ class FlashCardModel:
 
     # I was going to derive a second model off this one to handle the other test. But I found that
     # it's actually pretty useful to just use in the simple model and the code is cleaner this woy!
-    def check_answer(self, test_word : str):
+    def check_answer(self, test_word: str):
         """checks to see if the entered word matches the english side of the card"""
         return_value = self.back().casefold() == test_word.strip().casefold()
         if return_value:
@@ -39,7 +39,6 @@ class FlashCardModel:
 
     def calc_percent(self):
         return float(self.score)/len(self.card_words)
-
 
     def flip_card(self):
         self.showing_front = not self.showing_front

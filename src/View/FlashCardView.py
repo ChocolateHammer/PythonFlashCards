@@ -24,7 +24,7 @@ class FlashCardView:
                             "\nThen click the check if you got and the x if you missed it.")
         lang_l.pack(pady=0)
 
-#todo the render of the card is lacking will probably need to construct a canvas to make it work.
+# TODO: the render of the card is lacking will probably need to construct a canvas to make it work.
         # card button
         self.front_image = PhotoImage(file=image_path + "card_front.png")
         self.back_image = PhotoImage(file=image_path + "card_back.png")
@@ -37,21 +37,20 @@ class FlashCardView:
         # correct button
         self.correct_glyph = PhotoImage(file=image_path+"right.png")
         self.correct_button = Button(self.root, image=self.correct_glyph,
-                                     command=lambda :self.button_pressed(self.CORRECT_BUTTON))
+                                     command=lambda:self.button_pressed(self.CORRECT_BUTTON))
         self.correct_button.pack(side='left')
-        #incorrect button
+        # incorrect button
         self.incorrect_glyph = PhotoImage(file=image_path+"wrong.png")
         self.incorrect_button = Button(self.root, image=self.incorrect_glyph,
-                                       command=lambda :self.button_pressed(self.INCORRECT_BUTTON))
+                                       command=lambda:self.button_pressed(self.INCORRECT_BUTTON))
         self.incorrect_button.pack(side='right')
 
     def update_card(self):
         """updates the card to show the front side or back side"""
         if self.model.showing_front:
-            self.card_button.config(image=self.front_image, text=f"{self.model.language} : {self.model.front()}" )
+            self.card_button.config(image=self.front_image, text=f"{self.model.language} : {self.model.front()}")
         else:
             self.card_button.config(image=self.back_image, text=f"English : {self.model.back()}")
-        pass
 
     def card_button_pressed(self):
         """handles the pressing of the flip button"""
@@ -71,9 +70,9 @@ class FlashCardView:
 
     def handle_end_of_lesson(self):
         """handles the end of lesson stuff"""
-        self.root.withdraw() # hide the main window
+        self.root.withdraw()  # hide the main window
         messagebox.showinfo(title="Lesson Complete.",
-                             message=f"The lesson is concluded you got {self.model.calc_percent()*100}% correct!")
+                            message=f"The lesson is concluded you got {self.model.calc_percent()*100}% correct!")
         self.root.destroy()
 
     def launch_form(self):

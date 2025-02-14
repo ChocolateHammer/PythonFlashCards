@@ -23,9 +23,9 @@ class CourseSelectorView:
         self.select_lang = StringVar()
         lang_cb = Combobox(self.window, textvariable=self.select_lang)
         lang_cb['values'] = model.languages
-        lang_cb['state'] = 'readonly' #don't allow them to type unsupported or invalid options
-        lang_cb.grid( row=0, column=1, padx=8, pady=8)
-        self.select_lang.set( self.model.chosen_language)
+        lang_cb['state'] = 'readonly'  # don't allow them to type unsupported or invalid options
+        lang_cb.grid(row=0, column=1, padx=8, pady=8)
+        self.select_lang.set(self.model.chosen_language)
 
         # set up the card number
         cards_l = Label(self.window, text="How many cards would you like to try:")

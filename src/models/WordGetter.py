@@ -1,6 +1,7 @@
 from src.Controllers.ILangLoader import ILangLoader
 import random
 
+
 class WordGetter:
     """This class gathers the words to be used with this learning session
     Note: probably should just be a function rather than a class, but it's a
@@ -8,9 +9,9 @@ class WordGetter:
     and complicate it in some significant ways."""
 
     def __init__(self,
-                 loader : ILangLoader,
+                 loader: ILangLoader,
                  card_count: int,
-                 lang: str ):
+                 lang: str):
         self.card_count = card_count
         self.language = lang
         self.loader = loader
